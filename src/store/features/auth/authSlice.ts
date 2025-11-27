@@ -55,9 +55,9 @@ export const loginUser = createAsyncThunk(
             }
 
             return response.data;
-        } catch (error: any) {
+        } catch (error: unknown) {
             return rejectWithValue(
-                error.response?.data?.message || 'Login failed. Please try again.'
+                (error as { response?: { data?: { message?: string } } }).response?.data?.message || 'Login failed. Please try again.'
             );
         }
     }
@@ -76,9 +76,10 @@ export const registerUser = createAsyncThunk(
             }
 
             return response.data;
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const err = error as { response?: { data?: { message?: string } } };
             return rejectWithValue(
-                error.response?.data?.message || 'Registration failed. Please try again.'
+                err.response?.data?.message || 'Registration failed. Please try again.'
             );
         }
     }
@@ -96,9 +97,10 @@ export const fetchUserProfile = createAsyncThunk(
             }
 
             return response.data;
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const err = error as { response?: { data?: { message?: string } } };
             return rejectWithValue(
-                error.response?.data?.message || 'Failed to fetch profile.'
+                err.response?.data?.message || 'Failed to fetch profile. Please try again.'
             );
         }
     }
@@ -116,9 +118,10 @@ export const updateUserProfile = createAsyncThunk(
             }
 
             return response.data;
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const err = error as { response?: { data?: { message?: string } } };
             return rejectWithValue(
-                error.response?.data?.message || 'Failed to update profile.'
+                err.response?.data?.message || 'Failed to update profile. Please try again.'
             );
         }
     }
@@ -130,9 +133,10 @@ export const changeUserPassword = createAsyncThunk(
         try {
             await authService.changePassword(data);
             return { success: true };
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const err = error as { response?: { data?: { message?: string } } };
             return rejectWithValue(
-                error.response?.data?.message || 'Failed to change password.'
+                err.response?.data?.message || 'Failed to change password. Please try again.'
             );
         }
     }
@@ -253,4 +257,3 @@ const authSlice = createSlice({
 
 export const { setCredentials, logout, clearError } = authSlice.actions;
 export default authSlice.reducer;
-

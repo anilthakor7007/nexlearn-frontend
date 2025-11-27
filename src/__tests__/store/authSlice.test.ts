@@ -4,7 +4,6 @@ import authReducer, {
     logout,
     clearError,
 } from '@/store/features/auth/authSlice';
-import { authService } from '@/lib/services/authService';
 import type { User } from '@/types/auth.types';
 
 // Mock the auth service

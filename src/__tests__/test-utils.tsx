@@ -15,7 +15,7 @@ export function setupStore(preloadedState?: Partial<RootState>) {
         reducer: {
             auth: authReducer,
         },
-        preloadedState: preloadedState as any,
+        preloadedState: preloadedState as unknown as RootState,
     });
 }
 
