@@ -15,9 +15,9 @@ export default function AuthLayout({
                 </div>
 
                 <div className="max-w-md">
-                    <blockquote className="text-xl font-medium">
-                        "This platform has revolutionized how we deliver training to our global workforce. The multi-tenant capabilities are a game changer."
-                    </blockquote>
+                    <p className="text-sm text-zinc-400 leading-relaxed">
+                        &ldquo;NexLearn has transformed how we deliver training. The AI-powered recommendations and progress tracking have increased our completion rates by 40%.&rdquo;
+                    </p>
                     <div className="mt-4 flex items-center gap-4">
                         <div className="w-10 h-10 rounded-full bg-zinc-700"></div>
                         <div>

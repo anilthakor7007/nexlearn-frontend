@@ -63,7 +63,7 @@ export interface ChangePasswordData {
 }
 
 // API Response types
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   message: string;
   data?: T;
@@ -73,5 +73,5 @@ export interface ApiResponse<T = any> {
 export interface ApiError {
   success: false;
   message: string;
-  error?: string;
+  error?: unknown;
 }

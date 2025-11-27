@@ -6,14 +6,6 @@ const publicRoutes = ['/', '/login', '/register', '/forgot-password'];
 const authRoutes = ['/login', '/register', '/forgot-password'];
 const protectedRoutes = ['/dashboard'];
 
-// Role-based route access
-const roleRoutes = {
-    admin: ['/dashboard/admin'],
-    tenant_admin: ['/dashboard/admin'],
-    instructor: ['/dashboard/courses', '/dashboard/admin'],
-    student: ['/dashboard/my-courses', '/dashboard/browse', '/dashboard/learn'],
-};
-
 export function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
 
