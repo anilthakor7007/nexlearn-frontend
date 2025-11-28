@@ -62,6 +62,11 @@ export interface ChangePasswordData {
   newPassword: string;
 }
 
+export interface ResetPasswordData {
+  token: string;
+  password: string;
+}
+
 // API Response types
 export interface ApiResponse<T = any> {
   success: boolean;

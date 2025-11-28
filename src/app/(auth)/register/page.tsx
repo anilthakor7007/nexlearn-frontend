@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -16,6 +17,7 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import PasswordInput from '@/components/ui/PasswordInput';
 import {
     Card,
     CardContent,
@@ -57,6 +59,7 @@ export default function RegisterPage() {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { isLoading, error } = useAppSelector((state) => state.auth);
+    const [showPassword, setShowPassword] = useState(false);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -164,7 +167,12 @@ export default function RegisterPage() {
                                 <FormItem>
                                     <FormLabel>Password</FormLabel>
                                     <FormControl>
-                                        <Input type="password" placeholder="••••••••" {...field} />
+                                        <PasswordInput
+                                            placeholder="••••••••"
+                                            {...field}
+                                            showPassword={showPassword}
+                                            onToggle={() => setShowPassword(!showPassword)}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -177,7 +185,12 @@ export default function RegisterPage() {
                                 <FormItem>
                                     <FormLabel>Confirm Password</FormLabel>
                                     <FormControl>
-                                        <Input type="password" placeholder="••••••••" {...field} />
+                                        <PasswordInput
+                                            placeholder="••••••••"
+                                            {...field}
+                                            showPassword={showPassword}
+                                            hideToggle={true}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

@@ -5,6 +5,7 @@ import type {
     AuthResponse,
     ProfileUpdateData,
     ChangePasswordData,
+    ResetPasswordData,
     ApiResponse,
     User,
 } from '@/types/auth.types';
@@ -51,6 +52,22 @@ export const authService = {
      */
     async changePassword(data: ChangePasswordData): Promise<ApiResponse> {
         const response = await api.put<ApiResponse>('/auth/change-password', data);
+        return response.data;
+    },
+
+    /**
+     * Forgot password request
+     */
+    async forgotPassword(email: string): Promise<ApiResponse> {
+        const response = await api.post<ApiResponse>('/auth/forgot-password', { email });
+        return response.data;
+    },
+
+    /**
+     * Reset password with token
+     */
+    async resetPassword(data: ResetPasswordData): Promise<ApiResponse> {
+        const response = await api.post<ApiResponse>('/auth/reset-password', data);
         return response.data;
     },
 
