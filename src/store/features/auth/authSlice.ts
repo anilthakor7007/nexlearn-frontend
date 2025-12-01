@@ -58,6 +58,7 @@ export const loginUser = createAsyncThunk(
             if (typeof window !== 'undefined') {
                 localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem('tenantId', user.tenantId);
             }
 
             return { token, user };
@@ -82,6 +83,7 @@ export const registerUser = createAsyncThunk(
             if (typeof window !== 'undefined') {
                 localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem('tenantId', user.tenantId);
             }
 
             return { token, user };
@@ -192,6 +194,7 @@ const authSlice = createSlice({
             if (typeof window !== 'undefined') {
                 localStorage.setItem('token', action.payload.token);
                 localStorage.setItem('user', JSON.stringify(action.payload.user));
+                localStorage.setItem('tenantId', action.payload.user.tenantId);
             }
         },
         logout: (state) => {
@@ -201,6 +204,11 @@ const authSlice = createSlice({
             state.error = null;
 
             // Clear localStorage
+            if (typeof window !== 'undefined') {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                localStorage.removeItem('tenantId');
+            }
             authService.logout();
         },
         clearError: (state) => {

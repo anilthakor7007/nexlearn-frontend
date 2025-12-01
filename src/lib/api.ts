@@ -10,12 +10,26 @@ const api = axios.create({
 // Request interceptor
 api.interceptors.request.use(
     (config) => {
-        // You can add auth token here from localStorage or Redux state if needed
-        // For now, we'll just return the config
+        // Add auth token from localStorage
         const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
+
+        // Add tenant ID from localStorage or fallback for development
+        const tenantId = typeof window !== 'undefined' ? localStorage.getItem('tenantId') : null;
+        if (tenantId) {
+            config.headers['X-Tenant-ID'] = tenantId;
+        } else if (process.env.NODE_ENV === 'development') {
+            // Fallback for localhost development (e.g. forgot password flow without login)
+            config.headers['X-Tenant-ID'] = '691f0179c7ccdddb9f2f7618';
+        }
+
+        // Debug logging
+        console.log('API Request:', config.url);
+        console.log('NODE_ENV:', process.env.NODE_ENV);
+        console.log('Tenant ID:', config.headers['X-Tenant-ID']);
+
         return config;
     },
     (error) => {
