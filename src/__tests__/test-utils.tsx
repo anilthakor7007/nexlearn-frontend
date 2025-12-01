@@ -15,6 +15,7 @@ export function setupStore(preloadedState?: Partial<RootState>) {
         reducer: {
             auth: authReducer,
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         preloadedState: preloadedState as any,
     });
 }

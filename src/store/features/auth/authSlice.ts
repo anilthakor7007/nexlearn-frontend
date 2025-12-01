@@ -62,9 +62,10 @@ export const loginUser = createAsyncThunk(
             }
 
             return { token, user };
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const apiError = error as { response?: { data?: { message?: string } } };
             return rejectWithValue(
-                error.response?.data?.message || 'Login failed. Please try again.'
+                apiError.response?.data?.message || 'Login failed. Please try again.'
             );
         }
     }
@@ -87,9 +88,10 @@ export const registerUser = createAsyncThunk(
             }
 
             return { token, user };
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const apiError = error as { response?: { data?: { message?: string } } };
             return rejectWithValue(
-                error.response?.data?.message || 'Registration failed. Please try again.'
+                apiError.response?.data?.message || 'Registration failed. Please try again.'
             );
         }
     }
@@ -107,9 +109,10 @@ export const fetchUserProfile = createAsyncThunk(
             }
 
             return response.data;
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const apiError = error as { response?: { data?: { message?: string } } };
             return rejectWithValue(
-                error.response?.data?.message || 'Failed to fetch profile.'
+                apiError.response?.data?.message || 'Failed to fetch profile.'
             );
         }
     }
@@ -127,9 +130,10 @@ export const updateUserProfile = createAsyncThunk(
             }
 
             return response.data;
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const apiError = error as { response?: { data?: { message?: string } } };
             return rejectWithValue(
-                error.response?.data?.message || 'Failed to update profile.'
+                apiError.response?.data?.message || 'Failed to update profile.'
             );
         }
     }
@@ -141,9 +145,10 @@ export const changeUserPassword = createAsyncThunk(
         try {
             await authService.changePassword(data);
             return { success: true };
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const apiError = error as { response?: { data?: { message?: string } } };
             return rejectWithValue(
-                error.response?.data?.message || 'Failed to change password.'
+                apiError.response?.data?.message || 'Failed to change password.'
             );
         }
     }
@@ -155,9 +160,10 @@ export const forgotUserPassword = createAsyncThunk(
         try {
             const response = await authService.forgotPassword(email);
             return response;
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const apiError = error as { response?: { data?: { message?: string } } };
             return rejectWithValue(
-                error.response?.data?.message || 'Failed to send reset email.'
+                apiError.response?.data?.message || 'Failed to send reset email.'
             );
         }
     }
@@ -169,9 +175,10 @@ export const resetUserPassword = createAsyncThunk(
         try {
             const response = await authService.resetPassword(data);
             return response;
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const apiError = error as { response?: { data?: { message?: string } } };
             return rejectWithValue(
-                error.response?.data?.message || 'Failed to reset password.'
+                apiError.response?.data?.message || 'Failed to reset password.'
             );
         }
     }

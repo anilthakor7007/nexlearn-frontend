@@ -16,7 +16,7 @@ export default function AuthLayout({
 
                 <div className="max-w-md">
                     <blockquote className="text-xl font-medium">
-                        "This platform has revolutionized how we deliver training to our global workforce. The multi-tenant capabilities are a game changer."
+                        &quot;This platform has revolutionized how we deliver training to our global workforce. The multi-tenant capabilities are a game changer.&quot;
                     </blockquote>
                     <div className="mt-4 flex items-center gap-4">
                         <div className="w-10 h-10 rounded-full bg-zinc-700"></div>

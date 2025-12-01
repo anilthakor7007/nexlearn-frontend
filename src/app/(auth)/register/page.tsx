@@ -75,6 +75,7 @@ export default function RegisterPage() {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { confirmPassword, ...registerData } = values;
             const result = await dispatch(registerUser(registerData)).unwrap();
 
@@ -86,9 +87,10 @@ export default function RegisterPage() {
             } else {
                 router.push('/dashboard/my-courses');
             }
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const errorMessage = typeof error === 'string' ? error : 'Registration failed. Please try again.';
             form.setError('root', {
-                message: error || 'Registration failed. Please try again.',
+                message: errorMessage,
             });
         }
     }
