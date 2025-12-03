@@ -164,6 +164,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { profileService, UpdateProfileData, ChangePasswordData } from '@/lib/services/profileService';
 import { RootState } from '@/store';
+import { AxiosError } from 'axios';
+import { ApiError } from '@/types/auth.types';
 
 interface ProfileState {
     isUpdatingProfile: boolean;
@@ -192,9 +194,9 @@ export const updateProfile = createAsyncThunk(
         try {
             const response = await profileService.updateProfile(data);
             return response.data;
-        } catch (error: any) {
+        } catch (error) {
             return rejectWithValue(
-                error.response?.data?.message || 'Failed to update profile'
+                (error as AxiosError<ApiError>).response?.data?.message || 'Failed to update profile'
             );
         }
     }
@@ -205,13 +207,14 @@ export const uploadAvatar = createAsyncThunk(
     async (file: File, { rejectWithValue, dispatch }) => {
         try {
             const response = await profileService.uploadAvatar(file, (progressEvent) => {
-                const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                const total = progressEvent.total || 100; // Default to 100 to avoid division by zero
+                const progress = Math.round((progressEvent.loaded * 100) / total);
                 dispatch(setUploadProgress(progress));
             });
             return response.data;
-        } catch (error: any) {
+        } catch (error) {
             return rejectWithValue(
-                error.response?.data?.message || 'Failed to upload avatar'
+                (error as AxiosError<ApiError>).response?.data?.message || 'Failed to upload avatar'
             );
         }
     }
@@ -223,9 +226,9 @@ export const changePassword = createAsyncThunk(
         try {
             const response = await profileService.changePassword(data);
             return response.data;
-        } catch (error: any) {
+        } catch (error) {
             return rejectWithValue(
-                error.response?.data?.message || 'Failed to change password'
+                (error as AxiosError<ApiError>).response?.data?.message || 'Failed to change password'
             );
         }
     }

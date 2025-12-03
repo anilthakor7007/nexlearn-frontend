@@ -1,4 +1,5 @@
 import api from '../api';
+import { AxiosProgressEvent } from 'axios';
 
 export interface UpdateProfileData {
     firstName?: string;
@@ -28,7 +29,7 @@ export const profileService = {
     /**
      * Upload avatar
      */
-    async uploadAvatar(file: File, onUploadProgress?: (progressEvent: any) => void) {
+    async uploadAvatar(file: File, onUploadProgress?: (progressEvent: AxiosProgressEvent) => void) {
         const formData = new FormData();
         formData.append('avatar', file);
 

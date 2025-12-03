@@ -42,6 +42,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Trash2, UserCog, UserPlus } from 'lucide-react';
 import RoleGuard from '@/components/auth/RoleGuard';
+import { User } from '@/types/auth.types';
 
 export default function UsersPage() {
     return (
@@ -57,7 +58,7 @@ function UsersPageContent() {
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [roleDialogOpen, setRoleDialogOpen] = useState(false);
     const [createDialogOpen, setCreateDialogOpen] = useState(false);
-    const [selectedUser, setSelectedUser] = useState<any>(null);
+    const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [newRole, setNewRole] = useState('');
     const [formData, setFormData] = useState({
         email: '',
@@ -266,7 +267,7 @@ function UsersPageContent() {
                             <Label htmlFor="role">Role</Label>
                             <Select
                                 value={formData.role}
-                                onValueChange={(value: any) => setFormData({ ...formData, role: value })}
+                                onValueChange={(value: 'student' | 'instructor' | 'admin') => setFormData({ ...formData, role: value })}
                             >
                                 <SelectTrigger>
                                     <SelectValue />
