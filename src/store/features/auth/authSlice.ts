@@ -7,7 +7,9 @@ import type {
     ProfileUpdateData,
     ChangePasswordData,
     ResetPasswordData,
+    ApiError,
 } from '@/types/auth.types';
+import { AxiosError } from 'axios';
 
 interface AuthState {
     user: User | null;
@@ -61,10 +63,9 @@ export const loginUser = createAsyncThunk(
             }
 
             return { token, user };
-        } catch (error: any) {
-            return rejectWithValue(
-                error.response?.data?.message || 'Login failed. Please try again.'
-            );
+        } catch (error) {
+            const message = (error as AxiosError<ApiError>).response?.data?.message || 'Login failed. Please try again.';
+            return rejectWithValue(message);
         }
     }
 );
@@ -85,10 +86,9 @@ export const registerUser = createAsyncThunk(
             }
 
             return { token, user };
-        } catch (error: any) {
-            return rejectWithValue(
-                error.response?.data?.message || 'Registration failed. Please try again.'
-            );
+        } catch (error) {
+            const message = (error as AxiosError<ApiError>).response?.data?.message || 'Registration failed. Please try again.';
+            return rejectWithValue(message);
         }
     }
 );
@@ -105,10 +105,9 @@ export const fetchUserProfile = createAsyncThunk(
             }
 
             return response.data;
-        } catch (error: any) {
-            return rejectWithValue(
-                error.response?.data?.message || 'Failed to fetch profile.'
-            );
+        } catch (error) {
+            const message = (error as AxiosError<ApiError>).response?.data?.message || 'Failed to fetch profile.';
+            return rejectWithValue(message);
         }
     }
 );
@@ -125,10 +124,9 @@ export const updateUserProfile = createAsyncThunk(
             }
 
             return response.data;
-        } catch (error: any) {
-            return rejectWithValue(
-                error.response?.data?.message || 'Failed to update profile.'
-            );
+        } catch (error) {
+            const message = (error as AxiosError<ApiError>).response?.data?.message || 'Failed to update profile.';
+            return rejectWithValue(message);
         }
     }
 );
@@ -139,10 +137,9 @@ export const changeUserPassword = createAsyncThunk(
         try {
             await authService.changePassword(data);
             return { success: true };
-        } catch (error: any) {
-            return rejectWithValue(
-                error.response?.data?.message || 'Failed to change password.'
-            );
+        } catch (error) {
+            const message = (error as AxiosError<ApiError>).response?.data?.message || 'Failed to change password.';
+            return rejectWithValue(message);
         }
     }
 );
@@ -153,10 +150,9 @@ export const forgotUserPassword = createAsyncThunk(
         try {
             const response = await authService.forgotPassword(email);
             return response;
-        } catch (error: any) {
-            return rejectWithValue(
-                error.response?.data?.message || 'Failed to send reset email.'
-            );
+        } catch (error) {
+            const message = (error as AxiosError<ApiError>).response?.data?.message || 'Failed to send reset email.';
+            return rejectWithValue(message);
         }
     }
 );
@@ -167,10 +163,9 @@ export const resetUserPassword = createAsyncThunk(
         try {
             const response = await authService.resetPassword(data);
             return response;
-        } catch (error: any) {
-            return rejectWithValue(
-                error.response?.data?.message || 'Failed to reset password.'
-            );
+        } catch (error) {
+            const message = (error as AxiosError<ApiError>).response?.data?.message || 'Failed to reset password.';
+            return rejectWithValue(message);
         }
     }
 );
@@ -192,6 +187,15 @@ const authSlice = createSlice({
             if (typeof window !== 'undefined') {
                 localStorage.setItem('token', action.payload.token);
                 localStorage.setItem('user', JSON.stringify(action.payload.user));
+            }
+        },
+        updateUserAvatar: (state, action: PayloadAction<string>) => {
+            if (state.user) {
+                state.user.avatar = action.payload;
+                // Update localStorage
+                if (typeof window !== 'undefined') {
+                    localStorage.setItem('user', JSON.stringify(state.user));
+                }
             }
         },
         logout: (state) => {
@@ -316,6 +320,6 @@ const authSlice = createSlice({
     },
 });
 
-export const { setCredentials, logout, clearError } = authSlice.actions;
+export const { setCredentials, updateUserAvatar, logout, clearError } = authSlice.actions;
 export default authSlice.reducer;
 

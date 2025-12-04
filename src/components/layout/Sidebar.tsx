@@ -10,7 +10,6 @@ import {
     Settings,
     Users,
     GraduationCap,
-    LogOut,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -55,7 +54,7 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
     isMobile?: boolean;
 }
 
-export function Sidebar({ className, isMobile }: SidebarProps) {
+export function Sidebar({ className }: SidebarProps) {
     const pathname = usePathname();
     const { user } = useAppSelector((state) => state.auth);
 

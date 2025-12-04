@@ -62,9 +62,9 @@ export default function LoginPage() {
             } else {
                 router.push('/dashboard/my-courses');
             }
-        } catch (error: any) {
+        } catch (error) {
             form.setError('root', {
-                message: error || 'Invalid email or password',
+                message: (error as string) || 'Invalid email or password',
             });
         }
     }
@@ -121,7 +121,7 @@ export default function LoginPage() {
             </CardContent>
             <CardFooter className="px-0 flex flex-col space-y-2">
                 <div className="text-sm text-center text-zinc-500">
-                    Don't have an account?{' '}
+                    Don&apos;t have an account?{' '}
                     <Link href="/register" className="underline underline-offset-4 hover:text-primary">
                         Sign up
                     </Link>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -13,18 +13,11 @@ function ResetPasswordForm() {
     const dispatch = useAppDispatch();
     const { isLoading, error } = useAppSelector((state) => state.auth);
 
-    const [token, setToken] = useState('');
+    const token = searchParams.get('token');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [validationError, setValidationError] = useState('');
     const [isSuccess, setIsSuccess] = useState(false);
-
-    useEffect(() => {
-        const tokenParam = searchParams.get('token');
-        if (tokenParam) {
-            setToken(tokenParam);
-        }
-    }, [searchParams]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { usersService, CreateUserData, UpdateUserData } from '@/lib/services/usersService';
+import { AxiosError } from 'axios';
+import { ApiError } from '@/types/auth.types';
 
 interface User {
     _id: string;
@@ -45,9 +47,9 @@ export const fetchUsers = createAsyncThunk(
         try {
             const response = await usersService.getUsers(page, limit);
             return response.data;
-        } catch (error: any) {
+        } catch (error) {
             return rejectWithValue(
-                error.response?.data?.message || 'Failed to fetch users'
+                (error as AxiosError<ApiError>).response?.data?.message || 'Failed to fetch users'
             );
         }
     }
@@ -59,9 +61,9 @@ export const fetchUserById = createAsyncThunk(
         try {
             const response = await usersService.getUserById(id);
             return response.data.user;
-        } catch (error: any) {
+        } catch (error) {
             return rejectWithValue(
-                error.response?.data?.message || 'Failed to fetch user'
+                (error as AxiosError<ApiError>).response?.data?.message || 'Failed to fetch user'
             );
         }
     }
@@ -74,9 +76,9 @@ export const createUser = createAsyncThunk(
             const response = await usersService.createUser(data);
             const user = response.data.user;
             return { ...user, _id: user.id || user._id };
-        } catch (error: any) {
+        } catch (error) {
             return rejectWithValue(
-                error.response?.data?.message || 'Failed to create user'
+                (error as AxiosError<ApiError>).response?.data?.message || 'Failed to create user'
             );
         }
     }
@@ -88,9 +90,9 @@ export const updateUser = createAsyncThunk(
         try {
             const response = await usersService.updateUser(id, data);
             return response.data.user;
-        } catch (error: any) {
+        } catch (error) {
             return rejectWithValue(
-                error.response?.data?.message || 'Failed to update user'
+                (error as AxiosError<ApiError>).response?.data?.message || 'Failed to update user'
             );
         }
     }
@@ -102,9 +104,9 @@ export const changeUserRole = createAsyncThunk(
         try {
             const response = await usersService.changeUserRole(id, role);
             return response.data.user;
-        } catch (error: any) {
+        } catch (error) {
             return rejectWithValue(
-                error.response?.data?.message || 'Failed to change user role'
+                (error as AxiosError<ApiError>).response?.data?.message || 'Failed to change user role'
             );
         }
     }
@@ -116,9 +118,9 @@ export const deleteUser = createAsyncThunk(
         try {
             await usersService.deleteUser(id);
             return id;
-        } catch (error: any) {
+        } catch (error) {
             return rejectWithValue(
-                error.response?.data?.message || 'Failed to delete user'
+                (error as AxiosError<ApiError>).response?.data?.message || 'Failed to delete user'
             );
         }
     }
