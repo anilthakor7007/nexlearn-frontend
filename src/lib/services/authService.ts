@@ -75,10 +75,11 @@ export const authService = {
      * Logout user (client-side cleanup)
      */
     logout(): void {
-        // Remove token from localStorage
+        // Remove token and user data from localStorage
         if (typeof window !== 'undefined') {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
+            localStorage.removeItem('tenantId'); // Clear tenant context on logout
         }
     },
 };
