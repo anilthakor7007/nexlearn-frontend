@@ -60,6 +60,10 @@ export const loginUser = createAsyncThunk(
             if (typeof window !== 'undefined') {
                 localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(user));
+                // Sync tenantId for API requests
+                if (user.tenantId) {
+                    localStorage.setItem('tenantId', user.tenantId);
+                }
             }
 
             return { token, user };
@@ -83,6 +87,10 @@ export const registerUser = createAsyncThunk(
             if (typeof window !== 'undefined') {
                 localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(user));
+                // Sync tenantId for API requests
+                if (user.tenantId) {
+                    localStorage.setItem('tenantId', user.tenantId);
+                }
             }
 
             return { token, user };
@@ -187,6 +195,10 @@ const authSlice = createSlice({
             if (typeof window !== 'undefined') {
                 localStorage.setItem('token', action.payload.token);
                 localStorage.setItem('user', JSON.stringify(action.payload.user));
+                // Sync tenantId for API requests
+                if (action.payload.user.tenantId) {
+                    localStorage.setItem('tenantId', action.payload.user.tenantId);
+                }
             }
         },
         updateUserAvatar: (state, action: PayloadAction<string>) => {

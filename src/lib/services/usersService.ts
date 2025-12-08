@@ -25,8 +25,15 @@ export const usersService = {
     /**
      * Get all users with pagination
      */
-    async getUsers(page: number = 1, limit: number = 10) {
-        const response = await api.get(`/users?page=${page}&limit=${limit}`);
+    /**
+     * Get all users with pagination, search and filter
+     */
+    async getUsers(page: number = 1, limit: number = 10, search?: string, role?: string) {
+        let url = `/users?page=${page}&limit=${limit}`;
+        if (search) url += `&search=${encodeURIComponent(search)}`;
+        if (role && role !== 'all') url += `&role=${role}`;
+
+        const response = await api.get(url);
         return response.data;
     },
 

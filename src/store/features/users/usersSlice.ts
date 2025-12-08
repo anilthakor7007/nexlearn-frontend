@@ -43,9 +43,9 @@ const initialState: UsersState = {
 // Async thunks
 export const fetchUsers = createAsyncThunk(
     'users/fetchUsers',
-    async ({ page = 1, limit = 10 }: { page?: number; limit?: number }, { rejectWithValue }) => {
+    async ({ page = 1, limit = 10, search, role }: { page?: number; limit?: number; search?: string; role?: string }, { rejectWithValue }) => {
         try {
-            const response = await usersService.getUsers(page, limit);
+            const response = await usersService.getUsers(page, limit, search, role);
             return response.data;
         } catch (error) {
             return rejectWithValue(

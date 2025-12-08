@@ -48,12 +48,12 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="mt-8 p-6 bg-white rounded-lg shadow-md max-w-md">
+        {/* <div className="mt-8 p-6 bg-white rounded-lg shadow-md max-w-md">
           <h3 className="font-semibold text-gray-900 mb-2">✅ Phase 1 Complete</h3>
           <p className="text-sm text-gray-600">
             Authentication system is fully functional. Try logging in or creating an account!
           </p>
-        </div>
+        </div> */}
       </main>
     </div>
   );
