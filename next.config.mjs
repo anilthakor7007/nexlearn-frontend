@@ -20,14 +20,15 @@ const nextConfig = {
         unoptimized: process.env.NODE_ENV === 'development',
     },
     async rewrites() {
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
         return [
             {
                 source: '/api/:path*',
-                destination: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/:path*`,
+                destination: `${backendUrl}/api/:path*`,
             },
             {
                 source: '/uploads/:path*',
-                destination: `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/:path*`,
+                destination: `${backendUrl}/uploads/:path*`,
             },
         ];
     },
