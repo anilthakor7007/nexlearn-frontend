@@ -159,7 +159,6 @@ export function ModuleList({ courseId, modules: initialModules, onModulesChange 
                                 <ModuleItem
                                     key={module._id}
                                     module={module}
-                                    courseId={courseId}
                                     onEdit={() => handleEditModule(module)}
                                     onDelete={() => handleDeleteModule(module._id)}
                                     onTogglePublish={() => handleTogglePublish(module._id)}
