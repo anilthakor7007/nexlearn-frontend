@@ -90,7 +90,7 @@ function UsersPageContent() {
 
     const handleDelete = async () => {
         if (selectedUser) {
-            await dispatch(deleteUser(selectedUser._id));
+            await dispatch(deleteUser(selectedUser.id));
             setDeleteDialogOpen(false);
             setSelectedUser(null);
             // Refresh list
@@ -100,7 +100,7 @@ function UsersPageContent() {
 
     const handleChangeRole = async () => {
         if (selectedUser && newRole) {
-            await dispatch(changeUserRole({ id: selectedUser._id, role: newRole }));
+            await dispatch(changeUserRole({ id: selectedUser.id, role: newRole }));
             setRoleDialogOpen(false);
             setSelectedUser(null);
             setNewRole('');
@@ -234,7 +234,7 @@ function UsersPageContent() {
                                 </TableRow>
                             ) : (
                                 users.map((user) => (
-                                    <TableRow key={user._id}>
+                                    <TableRow key={user.id}>
                                         <TableCell className="font-medium">
                                             {user.firstName} {user.lastName}
                                         </TableCell>

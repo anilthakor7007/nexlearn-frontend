@@ -52,7 +52,7 @@ const lessonSchema = z.object({
 type LessonFormValues = z.infer<typeof lessonSchema>;
 
 interface Lesson {
-    _id: string;
+    id: string;
     title: string;
     description?: string;
     type: "video" | "text" | "quiz" | "assignment";
@@ -146,7 +146,7 @@ export function LessonDialog({ moduleId, lesson, open, onOpenChange, onSuccess }
                     content,
                     isPreview: values.isPreview,
                 };
-                await api.put(`/lessons/${lesson._id}`, updatePayload);
+                await api.put(`/lessons/${lesson.id}`, updatePayload);
                 toast({
                     title: "Success",
                     description: "Lesson updated successfully",

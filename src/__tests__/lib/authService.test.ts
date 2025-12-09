@@ -20,7 +20,7 @@ describe('Auth Service', () => {
                     message: 'Login successful',
                     data: {
                         user: {
-                            _id: '123',
+                            id: '123',
                             email: 'test@example.com',
                             username: 'testuser',
                             firstName: 'Test',
@@ -58,7 +58,7 @@ describe('Auth Service', () => {
                     message: 'Registration successful',
                     data: {
                         user: {
-                            _id: '123',
+                            id: '123',
                             email: 'new@example.com',
                             username: 'newuser',
                             firstName: 'New',
@@ -97,7 +97,7 @@ describe('Auth Service', () => {
                 data: {
                     success: true,
                     data: {
-                        _id: '123',
+                        id: '123',
                         email: 'test@example.com',
                         username: 'testuser',
                         firstName: 'Test',

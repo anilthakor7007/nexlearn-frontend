@@ -12,7 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
 
 interface Lesson {
-    _id: string;
+    id: string;
     title: string;
     description?: string;
     type: "video" | "text" | "quiz" | "assignment";
@@ -66,8 +66,8 @@ export function LessonList({ moduleId, onLessonsChange }: LessonListProps) {
         const { active, over } = event;
 
         if (over && active.id !== over.id) {
-            const oldIndex = lessons.findIndex((l) => l._id === active.id);
-            const newIndex = lessons.findIndex((l) => l._id === over.id);
+            const oldIndex = lessons.findIndex((l) => l.id === active.id);
+            const newIndex = lessons.findIndex((l) => l.id === over.id);
 
             const newLessons = arrayMove(lessons, oldIndex, newIndex);
             setLessons(newLessons);
@@ -75,7 +75,7 @@ export function LessonList({ moduleId, onLessonsChange }: LessonListProps) {
             // Update order on backend
             try {
                 const lessonOrders = newLessons.map((lesson, index) => ({
-                    lessonId: lesson._id,
+                    lessonId: lesson.id,
                     order: index + 1,
                 }));
 
@@ -171,15 +171,15 @@ export function LessonList({ moduleId, onLessonsChange }: LessonListProps) {
             ) : (
                 <>
                     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                        <SortableContext items={lessons.map((l) => l._id)} strategy={verticalListSortingStrategy}>
+                        <SortableContext items={lessons.map((l) => l.id)} strategy={verticalListSortingStrategy}>
                             <div className="space-y-1">
                                 {lessons.map((lesson) => (
                                     <LessonItem
-                                        key={lesson._id}
+                                        key={lesson.id}
                                         lesson={lesson}
                                         onEdit={() => handleEditLesson(lesson)}
-                                        onDelete={() => handleDeleteLesson(lesson._id)}
-                                        onTogglePublish={() => handleTogglePublish(lesson._id)}
+                                        onDelete={() => handleDeleteLesson(lesson.id)}
+                                        onTogglePublish={() => handleTogglePublish(lesson.id)}
                                     />
                                 ))}
                             </div>

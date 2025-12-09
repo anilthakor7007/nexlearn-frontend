@@ -14,7 +14,7 @@ import { AxiosError } from "axios";
 import { ModuleList } from "@/components/modules/ModuleList";
 
 interface Course {
-    _id: string;
+    id: string;
     id: string;
     title: string;
     description: string;
@@ -31,7 +31,7 @@ interface Course {
 }
 
 interface Module {
-    _id: string;
+    id: string;
     title: string;
     description?: string;
     order: number;

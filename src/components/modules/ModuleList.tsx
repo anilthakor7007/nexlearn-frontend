@@ -13,7 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
 
 interface Module {
-    _id: string;
+    id: string;
     title: string;
     description?: string;
     order: number;
@@ -45,8 +45,8 @@ export function ModuleList({ courseId, modules: initialModules, onModulesChange 
         const { active, over } = event;
 
         if (over && active.id !== over.id) {
-            const oldIndex = modules.findIndex((m) => m._id === active.id);
-            const newIndex = modules.findIndex((m) => m._id === over.id);
+            const oldIndex = modules.findIndex((m) => m.id === active.id);
+            const newIndex = modules.findIndex((m) => m.id === over.id);
 
             const newModules = arrayMove(modules, oldIndex, newIndex);
             setModules(newModules);
@@ -54,7 +54,7 @@ export function ModuleList({ courseId, modules: initialModules, onModulesChange 
             // Update order on backend
             try {
                 const moduleOrders = newModules.map((module, index) => ({
-                    moduleId: module._id,
+                    moduleId: module.id,
                     order: index + 1,
                 }));
 
@@ -153,15 +153,15 @@ export function ModuleList({ courseId, modules: initialModules, onModulesChange 
                 </Card>
             ) : (
                 <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                    <SortableContext items={modules.map((m) => m._id)} strategy={verticalListSortingStrategy}>
+                    <SortableContext items={modules.map((m) => m.id)} strategy={verticalListSortingStrategy}>
                         <div className="space-y-2">
                             {modules.map((module) => (
                                 <ModuleItem
-                                    key={module._id}
+                                    key={module.id}
                                     module={module}
                                     onEdit={() => handleEditModule(module)}
-                                    onDelete={() => handleDeleteModule(module._id)}
-                                    onTogglePublish={() => handleTogglePublish(module._id)}
+                                    onDelete={() => handleDeleteModule(module.id)}
+                                    onTogglePublish={() => handleTogglePublish(module.id)}
                                     onLessonsChange={onModulesChange}
                                 />
                             ))}

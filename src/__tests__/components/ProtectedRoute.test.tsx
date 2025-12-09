@@ -43,7 +43,7 @@ describe('ProtectedRoute Component', () => {
         const preloadedState = {
             auth: {
                 user: {
-                    _id: '123',
+                    id: '123',
                     tenantId: 'tenant123',
                     email: 'test@example.com',
                     username: 'testuser',
@@ -97,7 +97,7 @@ describe('ProtectedRoute Component', () => {
         const preloadedState = {
             auth: {
                 user: {
-                    _id: '123',
+                    id: '123',
                     tenantId: 'tenant123',
                     email: 'student@example.com',
                     username: 'student',

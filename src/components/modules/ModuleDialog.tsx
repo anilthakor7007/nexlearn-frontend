@@ -38,7 +38,7 @@ const moduleSchema = z.object({
 type ModuleFormValues = z.infer<typeof moduleSchema>;
 
 interface Module {
-    _id: string;
+    id: string;
     title: string;
     description?: string;
     order: number;
@@ -90,7 +90,7 @@ export function ModuleDialog({ courseId, module, open, onOpenChange, onSuccess }
                     title: values.title,
                     description: values.description,
                 };
-                await api.put(`/modules/${module._id}`, updatePayload);
+                await api.put(`/modules/${module.id}`, updatePayload);
                 toast({
                     title: "Success",
                     description: "Module updated successfully",

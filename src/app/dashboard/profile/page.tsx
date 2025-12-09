@@ -205,7 +205,7 @@ export default function ProfilePage() {
             </div>
 
             {/* Profile Information */}
-            <ProfileEditForm user={user} key={user?._id || 'loading'} />
+            <ProfileEditForm user={user} key={user?.id || 'loading'} />
 
             {/* Password Change */}
             <div className="bg-white p-6 rounded-lg border">

@@ -1,6 +1,6 @@
 // User types
 export interface User {
-  _id: string;
+  id: string;
   tenantId: string;
   email: string;
   username: string;

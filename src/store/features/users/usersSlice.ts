@@ -4,7 +4,7 @@ import { AxiosError } from 'axios';
 import { ApiError } from '@/types/auth.types';
 
 interface User {
-    _id: string;
+    id: string;
     email: string;
     username: string;
     firstName: string;
@@ -75,7 +75,7 @@ export const createUser = createAsyncThunk(
         try {
             const response = await usersService.createUser(data);
             const user = response.data.user;
-            return { ...user, _id: user.id || user._id };
+            return { ...user, id: user.id || user.id };
         } catch (error) {
             return rejectWithValue(
                 (error as AxiosError<ApiError>).response?.data?.message || 'Failed to create user'
@@ -190,11 +190,11 @@ const usersSlice = createSlice({
             })
             .addCase(updateUser.fulfilled, (state, action) => {
                 state.isLoading = false;
-                const index = state.users.findIndex(u => u._id === action.payload._id);
+                const index = state.users.findIndex(u => u.id === action.payload.id);
                 if (index !== -1) {
                     state.users[index] = action.payload;
                 }
-                if (state.selectedUser?._id === action.payload._id) {
+                if (state.selectedUser?.id === action.payload.id) {
                     state.selectedUser = action.payload;
                 }
             })
@@ -211,7 +211,7 @@ const usersSlice = createSlice({
             // .addCase(changeUserRole.fulfilled, (state, action) => {
             //     console.log("UPDATED USER =", action.payload);
             //     state.isLoading = false;
-            //     const index = state.users.findIndex(u => u._id === action.payload._id);
+            //     const index = state.users.findIndex(u => u.id === action.payload.id);
             //     if (index !== -1) {
             //         state.users[index] = action.payload;
             //     }
@@ -223,15 +223,15 @@ const usersSlice = createSlice({
                 // Normalize backend response
                 const updatedUser = {
                     ...action.payload,
-                    _id: action.payload._id || action.payload.id,  // FIX: Map id → _id
+                    id: action.payload.id || action.payload.id,  // FIX: Map id → id
                 };
 
-                const index = state.users.findIndex(u => u._id === updatedUser._id);
+                const index = state.users.findIndex(u => u.id === updatedUser.id);
 
                 if (index !== -1) {
                     // Important: new array reference to trigger UI rerender
                     state.users = state.users.map(user =>
-                        user._id === updatedUser._id ? { ...user, ...updatedUser } : user
+                        user.id === updatedUser.id ? { ...user, ...updatedUser } : user
                     );
                 }
             })
@@ -248,7 +248,7 @@ const usersSlice = createSlice({
             })
             .addCase(deleteUser.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.users = state.users.filter(u => u._id !== action.payload);
+                state.users = state.users.filter(u => u.id !== action.payload);
             })
             .addCase(deleteUser.rejected, (state, action) => {
                 state.isLoading = false;

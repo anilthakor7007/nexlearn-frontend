@@ -19,7 +19,7 @@ describe('Auth Slice', () => {
     };
 
     const mockUser: User = {
-        _id: '123',
+        id: '123',
         tenantId: 'tenant123',
         email: 'test@example.com',
         username: 'testuser',

@@ -18,7 +18,7 @@ import {
 import { GripVertical, Edit, Trash2, Video, FileText, HelpCircle, Eye } from "lucide-react";
 
 interface Lesson {
-    _id: string;
+    id: string;
     title: string;
     description?: string;
     type: "video" | "text" | "quiz" | "assignment";
@@ -40,7 +40,7 @@ interface LessonItemProps {
 }
 
 export function LessonItem({ lesson, onEdit, onDelete, onTogglePublish }: LessonItemProps) {
-    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: lesson._id });
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: lesson.id });
 
     const style = {
         transform: CSS.Transform.toString(transform),

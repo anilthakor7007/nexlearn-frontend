@@ -21,7 +21,7 @@ import { useState } from "react";
 import { LessonList } from "../lessons/LessonList";
 
 interface Module {
-    _id: string;
+    id: string;
     title: string;
     description?: string;
     order: number;
@@ -40,7 +40,7 @@ interface ModuleItemProps {
 
 export function ModuleItem({ module, onEdit, onDelete, onTogglePublish, onLessonsChange }: ModuleItemProps) {
     const [isExpanded, setIsExpanded] = useState(false);
-    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: module._id });
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: module.id });
 
     const style = {
         transform: CSS.Transform.toString(transform),
@@ -134,7 +134,7 @@ export function ModuleItem({ module, onEdit, onDelete, onTogglePublish, onLesson
                             <p className="text-sm text-muted-foreground mb-4">{module.description}</p>
                         )}
                         <LessonList
-                            moduleId={module._id}
+                            moduleId={module.id}
                             onLessonsChange={onLessonsChange}
                         />
                     </CardContent>
